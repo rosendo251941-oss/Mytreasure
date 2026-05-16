@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>我的宝藏网页</title>
+  <meta name="description" content="一个精美、完整的“我的宝藏网页”单文件示例。" />
+  <style>
+    :root {
+      --bg-1: #0f172a;
+      --bg-2: #1e293b;
+      --card: rgba(255, 255, 255, 0.1);
+      --text: #f8fafc;
+      --muted: #cbd5e1;
+      --accent: #fbbf24;
+      --accent-2: #38bdf8;
+      --ok: #34d399;
+      --shadow: 0 20px 40px rgba(2, 6, 23, 0.5);
+      --radius: 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 600px at 15% 10%, rgba(56, 189, 248, 0.18), transparent 60%),
+        radial-gradient(800px 500px at 85% 20%, rgba(251, 191, 36, 0.18), transparent 60%),
+        linear-gradient(135deg, var(--bg-1), var(--bg-2));
+      overflow-x: hidden;
+    }
+
+    .sparkles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image:
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,0.35) 1px, transparent 2px),
+        radial-gradient(circle at 80% 40%, rgba(255,255,255,0.25) 1px, transparent 2px),
+        radial-gradient(circle at 50% 70%, rgba(255,255,255,0.2) 1px, transparent 2px),
+        radial-gradient(circle at 30% 80%, rgba(255,255,255,0.2) 1px, transparent 2px);
+      background-size: 220px 220px, 260px 260px, 320px 320px, 280px 280px;
+      animation: twinkle 10s linear infinite;
+      opacity: 0.7;
+    }
+
+    @keyframes twinkle {
+      0% { transform: translateY(0); opacity: .55; }
+      50% { transform: translateY(-8px); opacity: .95; }
+      100% { transform: translateY(0); opacity: .55; }
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      width: min(1100px, 92vw);
+      margin: 48px auto 60px;
+      display: grid;
+      gap: 22px;
+    }
+
+    .hero {
+      border-radius: calc(var(--radius) + 8px);
+      padding: 36px 30px;
+      background: linear-gradient(140deg, rgba(255,255,255,0.18), rgba(255,255,255,0.08));
+      border: 1px solid rgba(255,255,255,0.18);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 340px;
+      height: 340px;
+      right: -80px;
+      top: -110px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(251, 191, 36, .35), transparent 68%);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: 1px;
+    }
+
+    .sub {
+      margin: 12px 0 0;
+      color: var(--muted);
+      line-height: 1.75;
+      max-width: 680px;
+      font-size: 1.05rem;
+    }
+
+    .highlight {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .card h2, .card h3 {
+      margin-top: 0;
+    }
+
+    .big {
+      grid-column: span 8;
+    }
+
+    .small {
+      grid-column: span 4;
+    }
+
+    .treasure-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .treasure-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 12px;
+      border-radius: 14px;
+      background: rgba(15, 23, 42, 0.35);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .badge {
+      flex: 0 0 auto;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 14px;
+      background: linear-gradient(135deg, var(--accent), #f59e0b);
+      color: #111827;
+      font-weight: 800;
+    }
+
+    .quote {
+      line-height: 1.8;
+      color: #e2e8f0;
+      margin: 0;
+      border-left: 4px solid var(--accent-2);
+      padding-left: 14px;
+    }
+
+    .progress-wrap {
+      display: grid;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .progress-item {
+      display: grid;
+      gap: 6px;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .progress {
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.12);
+      overflow: hidden;
+    }
+
+    .progress > span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--accent-2), var(--ok));
+    }
+
+    .cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .btn {
+      appearance: none;
+      border: none;
+      cursor: pointer;
+      padding: 11px 16px;
+      border-radius: 12px;
+      font-weight: 700;
+      transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), #f59e0b);
+      color: #111827;
+      box-shadow: 0 10px 24px rgba(245, 158, 11, 0.35);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.14);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      opacity: 0.96;
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin-top: 4px;
+      padding-bottom: 10px;
+    }
+
+    @media (max-width: 900px) {
+      .big, .small {
+        grid-column: span 12;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="sparkles" aria-hidden="true"></div>
+
+  <main class="container">
+    <section class="hero">
+      <h1>✨ 我的宝藏网页</h1>
+      <p class="sub">
+        欢迎来到我的小小宝藏空间！这里收藏了我珍视的回忆、目标与灵感。
+        愿每一次打开页面，都能重新点亮对生活的热爱与期待。<span class="highlight">Keep shining.</span>
+      </p>
+      <div class="cta">
+        <a class="btn btn-primary" href="#treasures">🔎 查看宝藏</a>
+        <a class="btn btn-secondary" href="#goals">🎯 我的目标</a>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="card big" id="treasures">
+        <h2>🧰 我的宝藏清单</h2>
+        <ul class="treasure-list">
+          <li>
+            <span class="badge">1</span>
+            <div>
+              <strong>珍贵回忆</strong>
+              <div>和家人朋友共度的时光，是我永远的精神财富。</div>
+            </div>
+          </li>
+          <li>
+            <span class="badge">2</span>
+            <div>
+              <strong>持续学习</strong>
+              <div>阅读、写作、探索新技术，让我每天都有成长。</div>
+            </div>
+          </li>
+          <li>
+            <span class="badge">3</span>
+            <div>
+              <strong>热爱与创造</strong>
+              <div>把灵感变成作品，把想法落地成现实。</div>
+            </div>
+          </li>
+          <li>
+            <span class="badge">4</span>
+            <div>
+              <strong>健康习惯</strong>
+              <div>规律作息、适度运动和好心态，是最靠谱的“宝藏地图”。</div>
+            </div>
+          </li>
+        </ul>
+      </article>
+
+      <aside class="card small">
+        <h3>💡 今日一句</h3>
+        <p class="quote">
+          “你认真生活的每一天，都是未来回忆里的黄金时刻。”
+        </p>
+      </aside>
+
+      <article class="card big" id="goals">
+        <h2>🎯 宝藏进度条</h2>
+        <div class="progress-wrap">
+          <div class="progress-item">
+            <div class="progress-label"><span>读书计划</span><span>78%</span></div>
+            <div class="progress"><span style="width:78%"></span></div>
+          </div>
+          <div class="progress-item">
+            <div class="progress-label"><span>技能提升</span><span>64%</span></div>
+            <div class="progress"><span style="width:64%"></span></div>
+          </div>
+          <div class="progress-item">
+            <div class="progress-label"><span>健身目标</span><span>52%</span></div>
+            <div class="progress"><span style="width:52%"></span></div>
+          </div>
+        </div>
+      </article>
+
+      <aside class="card small">
+        <h3>🗝️ 小提示</h3>
+        <p style="margin: 0; color: #e2e8f0; line-height:1.8;">
+          真正的宝藏不只是“拥有”，更是“成长”。
+          请记得经常更新你的清单，记录每一个闪光瞬间。
+        </p>
+      </aside>
+    </section>
+
+    <p class="footer">© 2026 我的宝藏网页 · 用热爱与希望构建</p>
+  </main>
+</body>
+</html>
